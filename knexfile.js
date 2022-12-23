@@ -8,17 +8,17 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './database/dev.sqlite3'
+      filename: './src/database/dev.sqlite3'
     },
     migrations: {
-      directory: './database/migrations'
+      directory: './src/database/migrations'
     }
   },
 
   production: {
     client: 'sqlite3',
     connection: {
-      filename: './database/dev.sqlite3'
+      filename: './src/database/dev.sqlite3'
     }
   }
 
