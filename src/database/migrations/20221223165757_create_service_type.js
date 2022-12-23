@@ -4,10 +4,12 @@
  */
  exports.up = function(knex) {
     return knex.schema.createTable('service_types', function(t) {
-        t.uuid('id').primary();
+        t.increments('id').primary();
         t.string('description').notNull();
         t.decimal('price',6,2).notNull();
         t.integer('duration').notNull();
+
+        t.timestamp("created_at").defaultTo(knex.fn.now());
     });
 };
 

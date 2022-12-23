@@ -4,11 +4,11 @@
  */
  exports.up = function(knex) {
     return knex.schema.createTable('customers', function(t) {
-        t.uuid('id').primary();
+        t.increments('id').primary();
         t.string('name').notNull();
         t.string('phone').notNull();
 
-        t.string("userId").nullable().references("id").inTable("users");
+        t.integer("userId").nullable().references("id").inTable("users");
 
         t.timestamp("created_at").defaultTo(knex.fn.now());
     });

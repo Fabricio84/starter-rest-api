@@ -9,7 +9,7 @@ exports.up = function (knex) {
     t.string("password").notNull();
     t.string("role").notNull();
 
-    t.string("customerId").nullable().references("id").inTable("customers");
+    t.integer("customerId").nullable().references("id").inTable("customers");
 
     t.timestamp("created_at").defaultTo(knex.fn.now());
   });

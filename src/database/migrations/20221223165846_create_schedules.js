@@ -4,12 +4,12 @@
  */
  exports.up = function(knex) {
     return knex.schema.createTable('schedules', function(t) {
-        t.uuid('id').primary();
+        t.increments('id').primary();
         t.dateTime('start').notNull();
         t.dateTime('end').notNull();
 
-        t.string("serviceTypeID").references("id").inTable("service_types");
-        t.string("customerID").references("id").inTable("customers");
+        t.integer("serviceTypeID").references("id").inTable("service_types");
+        t.integer("customerID").references("id").inTable("customers");
 
         t.timestamp("created_at").defaultTo(knex.fn.now());
 

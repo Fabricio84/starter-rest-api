@@ -4,9 +4,11 @@
  */
  exports.up = function(knex) {
     return knex.schema.createTable('blocked_date', function(t) {
-        t.uuid('id').primary();
+        t.increments('id').primary();
         t.dateTime('start').notNull();
         t.dateTime('end').notNull();
+
+        t.timestamp("created_at").defaultTo(knex.fn.now());
     });
 };
 
