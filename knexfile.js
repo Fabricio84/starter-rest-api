@@ -12,14 +12,16 @@ module.exports = {
     },
     migrations: {
       directory: './src/database/migrations'
-    }
+    },
+    useNullAsDefault: true,
   },
 
   production: {
     client: 'sqlite3',
     connection: {
       filename: './src/database/dev.sqlite3'
-    }
+    },
+    useNullAsDefault: true,
   }
 
 };
