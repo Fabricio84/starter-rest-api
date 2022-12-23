@@ -2,9 +2,9 @@
   "name": "starter-rest-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "dev": "env-cmd nodemon index.js",
+    "dev": "env-cmd nodemon src/server.js",
     "repl": "env-cmd node"
   },
   "keywords": [],
