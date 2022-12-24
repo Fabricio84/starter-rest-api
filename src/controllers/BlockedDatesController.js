@@ -1,8 +1,10 @@
-const db = require('../database/connections');
+const { db, DbController } = require('../database/connections');
+
+const dbController = new DbController(db, 'blocked_date');
 
 class BlockedDatesController {
   async index(req, res) {
-    const models = await db('blocked_date').select('*');
+    const models = await dbController.findMany();
 
     return res.json(models);
   }
@@ -10,7 +12,7 @@ class BlockedDatesController {
   async show(req, res) {
     const { id } = req.params;
 
-    const [model] = await db('blocked_date').where('id', id);
+    const model = await dbController.findFirst(id);
 
     return res.json(model);
   }
@@ -18,7 +20,7 @@ class BlockedDatesController {
   async create(req, res) {
     const { start, end } = req.body;
 
-    await db('blocked_date').insert([ { start, end } ]);
+    await dbController.create({ start, end });
 
     return res.status(201).send();
   }
@@ -26,8 +28,7 @@ class BlockedDatesController {
   async update(req, res) {
     const { id } = req.params;
 
-    await db('blocked_date').where('id', id)
-    .update({ ...req.body });
+    await dbController.update(id, req.body);
 
     return res.status(204).send();
   }
@@ -35,7 +36,7 @@ class BlockedDatesController {
   async remove(req, res) {
     const { id } = req.params;
 
-    await db('blocked_date').where('id', id).del();
+    await dbController.delete(id);
 
     return res.status(204).send();
   }
