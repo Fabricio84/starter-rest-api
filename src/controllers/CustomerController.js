@@ -1,46 +1,44 @@
 const { db, DbController } = require('../database/connections');
 
+const dbUser = new DbController(db, 'users');
 const dbController = new DbController(db, 'customers');
 
 class CustomerController {
   async index(req, res) {
-    // const models = await db('customers').select('*');
     const models = await dbController.findMany();
 
     return res.json(models);
   }
 
   async show(req, res) {
-    const { id } = request.params;
+    const { id } = req.params;
 
-    const [model] = await db('customers').where('id', id);
+    const model = await dbController.findFirst(id);
 
     return res.json(model)
   }
 
   async create(req, res) {
-    const { name, phone, email, password } = request.body
+    const { name, phone, email, password } = req.body
 
-    const user = await db('users').insert({ email, password });
-
-    await db('customers').insert({ name, phone, userID: user.id });
+    const [user] = await dbUser.create({ email, password, role: 'customer' });
+    await dbController.create({ name, phone, userID: user.id });
 
     return res.status(201).send();
   }
 
   async update(req, res) {
-    const { id } = request.params;
+    const { id } = req.params;
 
-    await db('customers').where('id', id)
-    .update({ ...req.body });
+    await dbController.update(id, { ...req.body });
 
     return res.status(204).send();
   }
 
   async remove(req, res) {
-    const { id } = request.params;
+    const { id } = req.params;
 
-    await db('customers').where('id', id).del();
+    await dbController.remove(id);
 
     return res.status(204).send();
   }

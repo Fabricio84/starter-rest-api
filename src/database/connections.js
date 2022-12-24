@@ -21,7 +21,7 @@ class DbController {
     }
 
     async create(data) {
-        return this.db(this.table).insert(data);
+        return this.db(this.table).returning('id').insert(data);
     }
 
     async update(id, data) {

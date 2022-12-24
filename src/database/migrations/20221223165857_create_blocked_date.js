@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
  exports.up = function(knex) {
-    return knex.schema.createTable('blocked_date', function(t) {
+    return knex.schema.createTable('blocked_dates', function(t) {
         t.increments('id').primary();
         t.dateTime('start').notNull();
         t.dateTime('end').notNull();
@@ -17,5 +17,5 @@
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-    return knex.schema.dropTable('blocked_date');
+    return knex.schema.dropTable('blocked_dates');
 };

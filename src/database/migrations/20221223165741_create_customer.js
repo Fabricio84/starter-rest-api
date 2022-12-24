@@ -8,7 +8,7 @@
         t.string('name').notNull();
         t.string('phone').notNull();
 
-        t.integer("userId").nullable().references("id").inTable("users");
+        t.integer("userId").references("users.id").onDelete('CASCADE');
 
         t.timestamp("created_at").defaultTo(knex.fn.now());
     });

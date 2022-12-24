@@ -7,10 +7,10 @@ const saltRounds = 8;
 
 class AuthController {
   async register(req, res) {
-    const { email, password: passwordRaw } = req.body;
+    const { role, email, password: passwordRaw } = req.body;
     const password = await bcrypt.hash(passwordRaw, saltRounds);
 
-    await dbController.create({ email, password })
+    await dbController.create({ role, email, password })
 
     return res.status(201).send();
   }
@@ -18,7 +18,7 @@ class AuthController {
   async authenticate(req, res) {
     const { email, password } = req.body;
 
-    const user = await dbController.findFirst({ where: { email }});
+    const [user] = await db('users').where('email', email);
 
     if (!user) 
       return res.status(401).json({ message: 'Email não existe na nossa base de dados!'});
@@ -30,7 +30,7 @@ class AuthController {
     
     const accessToken = jwt.sign({ email: user.email }, String(process.env.JWT_SECRET));
 
-    res.json({ accessToken });
+    res.json({ user, accessToken });
   }
 
   // implementar recuperação de senha por meio de link via emails
@@ -55,4 +55,4 @@ class AuthController {
   }
 }
 
-export default AuthController;
+module.exports = AuthController;

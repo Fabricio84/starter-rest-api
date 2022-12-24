@@ -11,7 +11,7 @@ class ServiceTypeController {
   }
 
   async show(req, res) {
-    const { id } = request.params;
+    const { id } = req.params;
 
     const model = await dbController.findFirst(id)
 
@@ -19,17 +19,15 @@ class ServiceTypeController {
   }
 
   async create(req, res) {
-
-    const { description, value, duration } = request.body
-    const data = { description, value, duration }
+    const { description, price, duration } = req.body
     
-    await dbController.create(data);
+    await dbController.create({ description, price, duration });
 
     return res.status(201).end();
   }
 
   async update(req, res) {
-    const { id } = request.params;
+    const { id } = req.params;
 
     await dbController.update(id, req.body);
 
@@ -37,9 +35,9 @@ class ServiceTypeController {
   }
 
   async remove(req, res) {
-    const { id } = request.params;
+    const { id } = req.params;
 
-    await dbController.delete(id)
+    await dbController.remove(id)
 
     return res.status(204).send();
   }

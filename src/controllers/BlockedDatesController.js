@@ -1,10 +1,10 @@
 const { db, DbController } = require('../database/connections');
 
-const dbController = new DbController(db, 'blocked_date');
+const store = new DbController(db, 'blocked_dates');
 
 class BlockedDatesController {
   async index(req, res) {
-    const models = await dbController.findMany();
+    const models = await store.findMany();
 
     return res.json(models);
   }
@@ -12,7 +12,7 @@ class BlockedDatesController {
   async show(req, res) {
     const { id } = req.params;
 
-    const model = await dbController.findFirst(id);
+    const model = await store.findFirst(id);
 
     return res.json(model);
   }
@@ -20,7 +20,7 @@ class BlockedDatesController {
   async create(req, res) {
     const { start, end } = req.body;
 
-    await dbController.create({ start, end });
+    await store.create({ start, end });
 
     return res.status(201).send();
   }
@@ -28,7 +28,7 @@ class BlockedDatesController {
   async update(req, res) {
     const { id } = req.params;
 
-    await dbController.update(id, req.body);
+    await store.update(id, req.body);
 
     return res.status(204).send();
   }
@@ -36,7 +36,7 @@ class BlockedDatesController {
   async remove(req, res) {
     const { id } = req.params;
 
-    await dbController.delete(id);
+    await store.remove(id);
 
     return res.status(204).send();
   }

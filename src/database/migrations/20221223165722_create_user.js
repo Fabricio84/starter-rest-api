@@ -4,12 +4,12 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable("users", function (t) {
-    t.uuid("id").primary();
+    t.increments('id').primary();
     t.string("email").notNull();
     t.string("password").notNull();
     t.string("role").notNull();
 
-    t.integer("customerId").nullable().references("id").inTable("customers");
+    t.integer("customerId").nullable().references("customers.id").onDelete('CASCADE');
 
     t.timestamp("created_at").defaultTo(knex.fn.now());
   });
